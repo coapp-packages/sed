@@ -1,0 +1,52 @@
+#product-info
+{
+    product-name: "sed";
+    version: "4.2";
+    original-source-location: "http://ftp.gnu.org/gnu/sed/sed-4.2.tar.gz";
+    original-source-website: "http://www.gnu.org/software/sed/sed.html";
+    license: "GPL";
+    packager: "Rafael Rivera <rafael@withinwindows.com>";
+}
+
+default
+{
+    compiler: mingw;
+    platform: x86;
+ 
+    targets:
+    {
+      "sed/sed.exe"
+    };
+ 
+    build-command: @"
+      sh configure
+      make
+    ";
+ 
+    clean-command: @"
+      IF EXIST Makefile make clean
+      
+      del config.h 2>NUL
+      del config.log 2>NUL
+      del config.status 2>NUL
+      
+      del doc\Makefile 2>NUL
+      
+      rmdir /q /s lib\.deps 2>NUL
+      del lib\Makefile 2>NUL
+      
+      del po\Makefile 2>NUL
+      del po\Makefile.in 2>NUL
+      del po\POTFILES 2>NUL
+      
+      rmdir /q /s sed\.deps 2>NUL
+      del sed\Makefile 2>NUL
+      
+      del stamp-h1 2>NUL
+      rmdir /q /s testsuite\.deps 2>NUL
+      del testsuite\Makefile 2>NUL
+      del testsuite\version.good 2>NUL
+      
+      del Makefile 2>NUL
+    ";
+}
